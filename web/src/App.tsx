@@ -1,0 +1,60 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { AppShell } from './components/layout/AppShell';
+import { Dashboard } from './pages/Dashboard';
+import { Onboarding } from './pages/Onboarding';
+
+const PlaceholderPage = ({ title }: { title: string }) => (
+  <div className="glass-panel" style={{ marginTop: '2rem', textAlign: 'center' }}>
+    <h2>{title}</h2>
+    <p>Module currently under construction.</p>
+  </div>
+);
+
+const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { profile, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    return <div className="flex-center" style={{ height: '100vh' }}>Loading The FORGE...</div>;
+  }
+
+  if (profile) {
+    const isCurrentlyOnboarding = location.pathname === '/onboarding';
+    
+    if (!(profile as any).onboarding_completed && !isCurrentlyOnboarding) {
+      return <Navigate to="/onboarding" replace />;
+    }
+    
+    if ((profile as any).onboarding_completed && isCurrentlyOnboarding) {
+      return <Navigate to="/" replace />;
+    }
+  }
+
+  return <>{children}</>;
+};
+
+export const App = () => {
+  return (
+    <AuthProvider>
+      <Router>
+        <AuthWrapper>
+          <Routes>
+            <Route path="/onboarding" element={<Onboarding />} />
+            <Route element={<AppShell />}>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/arena" element={<PlaceholderPage title="Arena" />} />
+              <Route path="/mirror" element={<PlaceholderPage title="Mirror" />} />
+              <Route path="/lab" element={<PlaceholderPage title="Lab" />} />
+              <Route path="/council" element={<PlaceholderPage title="Council" />} />
+            </Route>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </AuthWrapper>
+      </Router>
+    </AuthProvider>
+  );
+};
+
+export default App;
