@@ -7,4 +7,6 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.error('CRITICAL: Missing Supabase Environment Variables. The app will fail to load.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = (supabaseUrl && supabaseAnonKey) 
+  ? createClient(supabaseUrl, supabaseAnonKey) 
+  : null as any;
