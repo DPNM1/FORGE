@@ -37,8 +37,8 @@ export const ActivityFeed: React.FC = () => {
         .limit(10);
 
       const combined = [
-        ...(tasks || []).map(t => ({ ...t, type: 'task', timestamp: t.created_at })),
-        ...(sessions || []).map(s => ({ ...s, type: 'deep_work', timestamp: s.start_time }))
+        ...(tasks || []).map((t: any) => ({ ...t, type: 'task', timestamp: t.created_at })),
+        ...(sessions || []).map((s: any) => ({ ...s, type: 'deep_work', timestamp: s.start_time }))
       ].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
       setActivities(combined.slice(0, 15));

@@ -38,7 +38,7 @@ export const HabitTracker: React.FC = () => {
 
       if (todayLogs) {
         const logMap: Record<string, boolean> = {};
-        todayLogs.forEach(log => {
+        todayLogs.forEach((log: any) => {
           logMap[log.habit_id] = log.completed;
         });
         setLogs(logMap);
