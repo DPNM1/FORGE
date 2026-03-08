@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
-import { Beaker, Calendar, TrendingUp, Plus, X, CheckCircle2 } from 'lucide-react';
+import { Beaker, Calendar, TrendingUp, Plus, X } from 'lucide-react';
 
 export const ExperimentManager: React.FC = () => {
   const { profile } = useAuth();

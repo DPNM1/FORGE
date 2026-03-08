@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
-import { User, Shield, Target, Scroll, BarChart3, Edit2, Check, X } from 'lucide-react';
+import { Shield, Target, Scroll, BarChart3 } from 'lucide-react';
 
 export const Profile: React.FC = () => {
   const { profile } = useAuth();
@@ -10,8 +10,6 @@ export const Profile: React.FC = () => {
   const [northStar, setNorthStar] = useState<any[]>([]);
   const [antiList, setAntiList] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editingSection, setEditingSection] = useState<string | null>(null);
-  const [editBuffer, setEditBuffer] = useState<string>('');
 
   useEffect(() => {
     if (!profile?.id) return;

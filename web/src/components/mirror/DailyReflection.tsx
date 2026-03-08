@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
-import { Sparkles, Trophy, Target, AlertTriangle, Send } from 'lucide-react';
+import { Sparkles, Trophy, Target, AlertTriangle } from 'lucide-react';
 
 export const DailyReflection: React.FC = () => {
   const { profile } = useAuth();
@@ -26,7 +26,7 @@ export const DailyReflection: React.FC = () => {
     setLoading(true);
     const today = new Date().toISOString().split('T')[0];
     try {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('daily_reflections')
         .select('*')
         .eq('user_id', profile?.id)

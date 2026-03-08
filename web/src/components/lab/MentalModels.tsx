@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
-import { Brain, Sparkles, BookOpen, Info, ChevronDown, ChevronUp } from 'lucide-react';
+import { Brain, Sparkles, BookOpen, ChevronDown, ChevronUp } from 'lucide-react';
 
 const PRESET_MODELS = [
   {
@@ -24,7 +24,7 @@ const PRESET_MODELS = [
 export const MentalModels: React.FC = () => {
   const { profile } = useAuth();
   const [models, setModels] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useEffect(() => {
