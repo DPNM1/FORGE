@@ -8,6 +8,7 @@ interface Profile {
   first_name: string;
   last_name?: string;
   username?: string;
+  onboarding_completed: boolean;
 }
 
 interface AuthContextType {
@@ -48,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 telegram_id: 12345678,
                 first_name: 'Seeker',
                 username: 'seeker_mock',
-                onboarding_completed: true
+                onboarding_completed: false
               }).select().single();
               
               if (newProfile) setProfile(newProfile);

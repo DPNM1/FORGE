@@ -23,7 +23,7 @@ export const Dashboard: React.FC = () => {
         const { data: statsData } = await supabase
           .from('v_user_stats')
           .select('*')
-          .eq('id', profile.id)
+          .eq('user_id', profile.id)
           .single();
         
         if (statsData) {

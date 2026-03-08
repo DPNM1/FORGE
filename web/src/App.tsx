@@ -23,13 +23,21 @@ const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   if (profile) {
     const isCurrentlyOnboarding = location.pathname === '/onboarding';
     
-    if (!(profile as any).onboarding_completed && !isCurrentlyOnboarding) {
+    if (!profile.onboarding_completed && !isCurrentlyOnboarding) {
       return <Navigate to="/onboarding" replace />;
     }
     
-    if ((profile as any).onboarding_completed && isCurrentlyOnboarding) {
+    if (profile.onboarding_completed && isCurrentlyOnboarding) {
       return <Navigate to="/" replace />;
     }
+  } else {
+    // If auth is finished and profile is still null, it's a critical auth failure
+    return (
+      <div className="flex-center" style={{ height: '100vh', flexDirection: 'column', gap: '1rem', padding: '2rem', textAlign: 'center' }}>
+        <h2 style={{ color: '#ef4444' }}>Terminal Authentication Failure</h2>
+        <p style={{ color: 'var(--text-muted)' }}>We couldn't verify your presence in the network. Please restart the bot.</p>
+      </div>
+    );
   }
 
   return <>{children}</>;
