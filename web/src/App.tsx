@@ -4,13 +4,13 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { AppShell } from './components/layout/AppShell';
 import { Dashboard } from './pages/Dashboard';
 import { Onboarding } from './pages/Onboarding';
-
-const PlaceholderPage = ({ title }: { title: string }) => (
-  <div className="glass-panel" style={{ marginTop: '2rem', textAlign: 'center' }}>
-    <h2>{title}</h2>
-    <p>Module currently under construction.</p>
-  </div>
-);
+import { Arena } from './pages/Arena';
+import { Mirror } from './pages/Mirror';
+import { Lab } from './pages/Lab';
+import { Council } from './pages/Council';
+import { Oracle } from './pages/Oracle';
+import { Profile } from './pages/Profile';
+import { ErrorBoundary } from './components/ui/ErrorBoundary';
 
 const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { profile, loading } = useAuth();
@@ -37,23 +37,27 @@ const AuthWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 export const App = () => {
   return (
-    <AuthProvider>
-      <Router>
-        <AuthWrapper>
-          <Routes>
-            <Route path="/onboarding" element={<Onboarding />} />
-            <Route element={<AppShell />}>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/arena" element={<PlaceholderPage title="Arena" />} />
-              <Route path="/mirror" element={<PlaceholderPage title="Mirror" />} />
-              <Route path="/lab" element={<PlaceholderPage title="Lab" />} />
-              <Route path="/council" element={<PlaceholderPage title="Council" />} />
-            </Route>
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </AuthWrapper>
-      </Router>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <Router>
+          <AuthWrapper>
+            <Routes>
+              <Route path="/onboarding" element={<Onboarding />} />
+              <Route element={<AppShell />}>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/arena" element={<Arena />} />
+                <Route path="/mirror" element={<Mirror />} />
+                <Route path="/lab" element={<Lab />} />
+                <Route path="/council" element={<Council />} />
+                <Route path="/oracle" element={<Oracle />} />
+                <Route path="/profile" element={<Profile />} />
+              </Route>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </AuthWrapper>
+        </Router>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 };
 

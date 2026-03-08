@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
-import { CheckCircle2, Circle } from 'lucide-react';
+import { CheckCircle2, Circle, Sparkles } from 'lucide-react';
+import { Skeleton } from '../components/ui/Skeleton';
 
 export const Dashboard: React.FC = () => {
   const { profile } = useAuth();
@@ -69,7 +70,7 @@ export const Dashboard: React.FC = () => {
 
   const toggleTask = async (task: any) => {
     // Optimistic UI update
-    const updatedTasks = dailyTasks.map(t => 
+    const updatedTasks = dailyTasks.map((t: any) => 
       t.id === task.id ? { ...t, is_completed: !t.is_completed } : t
     );
     setDailyTasks(updatedTasks);
@@ -84,7 +85,17 @@ export const Dashboard: React.FC = () => {
   const hoursDeepWork = Math.round((stats.total_deep_work_minutes / 60) * 10) / 10;
 
   if (loading) {
-    return <div className="flex-center" style={{ marginTop: '4rem' }}>Loading Dashboard...</div>;
+    return (
+      <div className="flex-center" style={{ flexDirection: 'column', gap: '1.5rem', marginTop: '1rem', width: '100%' }}>
+        <Skeleton width="100%" height="120px" />
+        <Skeleton width="100%" height="80px" />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', width: '100%' }}>
+          <Skeleton height="100px" />
+          <Skeleton height="100px" />
+        </div>
+        <Skeleton width="100%" height="200px" />
+      </div>
+    );
   }
 
   return (
@@ -97,6 +108,20 @@ export const Dashboard: React.FC = () => {
         </p>
         <h2 style={{ marginBottom: '0.5rem' }}>Welcome, {profile?.first_name}</h2>
         <p style={{ color: 'var(--accent-primary)', fontStyle: 'italic', fontWeight: 500 }}>"{identity}"</p>
+      </div>
+
+      {/* AI Insights Card (Phase 8) */}
+      <div className="glass-panel animate-fade-in" style={{ width: '100%', padding: '1rem', borderLeft: '4px solid var(--accent-primary)', background: 'rgba(167, 139, 250, 0.05)' }}>
+        <div className="flex-between" style={{ marginBottom: '0.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-primary)' }}>
+            <Sparkles size={16} />
+            <span style={{ fontWeight: 800, fontSize: '0.75rem', letterSpacing: '0.05em' }}>ORACLE INSIGHT</span>
+          </div>
+          <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>LVL 1</span>
+        </div>
+        <p style={{ margin: 0, fontSize: '0.9rem', lineHeight: 1.5 }}>
+          "Focus on the 'Anti-List' today. Your momentum is building, but late-night fatigue is your primary leak."
+        </p>
       </div>
 
       {/* Stats Grid */}
@@ -116,7 +141,7 @@ export const Dashboard: React.FC = () => {
         <div className="flex-between" style={{ marginBottom: '1rem' }}>
           <h3>Today's Arena</h3>
           <span style={{ fontSize: '0.8rem', background: 'rgba(255,255,255,0.1)', padding: '0.25rem 0.5rem', borderRadius: '4px' }}>
-            {dailyTasks.filter(t => t.is_completed).length} / 3
+            {dailyTasks.filter((t: any) => t.is_completed).length} / 3
           </span>
         </div>
         

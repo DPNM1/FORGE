@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { Home, Swords, BookOpen, FlaskConical, Users, Flame } from 'lucide-react';
+import { Home, Swords, BookOpen, FlaskConical, Users, Flame, User, MessageCircle } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -15,6 +15,7 @@ const navItems = [
   { path: '/mirror', label: 'Mirror', icon: BookOpen },
   { path: '/lab', label: 'Lab', icon: FlaskConical },
   { path: '/council', label: 'Council', icon: Users },
+  { path: '/profile', label: 'Profile', icon: User },
 ];
 
 export const AppShell: React.FC = () => {
@@ -59,15 +60,39 @@ export const AppShell: React.FC = () => {
         <Outlet />
       </main>
 
+      {/* Floating Oracle Button */}
+      <NavLink
+        to="/oracle"
+        className="glass-panel flex-center"
+        style={({ isActive }) => ({
+          position: 'fixed',
+          bottom: '5.5rem',
+          right: '1.5rem',
+          width: '56px',
+          height: '56px',
+          borderRadius: '50%',
+          background: isActive ? 'var(--accent-primary)' : 'rgba(167, 139, 250, 0.2)',
+          border: '1px solid var(--accent-primary)',
+          color: isActive ? 'white' : 'var(--accent-primary)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+          zIndex: 40,
+          transition: 'var(--transition)'
+        })}
+      >
+        <MessageCircle size={28} />
+      </NavLink>
+
       {/* Bottom Navigation */}
       <nav 
         className="glass-panel flex-between" 
         style={{ 
           position: 'fixed', 
           bottom: '1rem', 
-          left: '1rem', 
-          right: '1rem', 
-          padding: '0.75rem 1rem',
+          left: '50%', 
+          transform: 'translateX(-50%)',
+          width: 'calc(100% - 2rem)',
+          maxWidth: '500px',
+          padding: '0.75rem 1.5rem',
           borderRadius: '9999px',
           zIndex: 50
         }}

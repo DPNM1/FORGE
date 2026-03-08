@@ -8,7 +8,7 @@ const ListItem = ({ index, value, onChange, placeholder }: any) => (
   <div className="flex-center" style={{ gap: '0.5rem', marginBottom: '0.75rem' }}>
     <span style={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}>{index + 1}.</span>
     <input 
-      className="input-base" 
+      className="input-glass" 
       placeholder={placeholder} 
       value={value}
       onChange={(e) => onChange(index, e.target.value)}
@@ -162,11 +162,11 @@ export const Onboarding: React.FC = () => {
               
               <div style={{ textAlign: 'left', marginBottom: '1rem' }}>
                 <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>1 Year Vision</label>
-                <textarea className="input-base" style={{ height: '60px', marginTop: '0.25rem' }} value={visions['1_year']} onChange={e => setVisions({...visions, '1_year': e.target.value})} />
+                <textarea className="input-glass" style={{ height: '60px', marginTop: '0.25rem' }} value={visions['1_year']} onChange={e => setVisions({...visions, '1_year': e.target.value})} />
               </div>
               <div style={{ textAlign: 'left', marginBottom: '1rem' }}>
                 <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>3 Year Vision</label>
-                <textarea className="input-base" style={{ height: '60px', marginTop: '0.25rem' }} value={visions['3_year']} onChange={e => setVisions({...visions, '3_year': e.target.value})} />
+                <textarea className="input-glass" style={{ height: '60px', marginTop: '0.25rem' }} value={visions['3_year']} onChange={e => setVisions({...visions, '3_year': e.target.value})} />
               </div>
             </div>
           )}
@@ -209,7 +209,7 @@ export const Onboarding: React.FC = () => {
 
         <div className="flex-between" style={{ gap: '1rem', marginTop: '2rem' }}>
           {step > 1 && (
-            <button className="btn btn-outline" style={{ flex: 1 }} onClick={() => setStep(step - 1)}>
+            <button className="btn btn-secondary" style={{ flex: 1 }} onClick={() => setStep(step - 1)}>
               Back
             </button>
           )}

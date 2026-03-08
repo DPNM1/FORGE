@@ -35,9 +35,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // For local development without Telegram, we can mock or prompt for an ID
         // In a real app, you'd handle the 'no initData' case gracefully
         if (!initData) {
-          // If we are developing locally outside of Telegram, maybe we shouldn't fail fatally
           if (import.meta.env.DEV) {
-            console.warn("Running outside Telegram. Not authenticated.");
+            console.warn("Running outside Telegram. Using MOCK profile for development.");
+            const { data: profiles } = await supabase.from('profiles').select('*').limit(1);
+            if (profiles && profiles.length > 0) {
+              setProfile(profiles[0]);
+            } else {
+              // Create a dummy profile if none exists
+              const mockId = '81518b62-0e3a-4416-8c43-987817478052'; // Any valid UUID
+              const { data: newProfile, error } = await supabase.from('profiles').upsert({
+                id: mockId,
+                telegram_id: 12345678,
+                first_name: 'Seeker',
+                username: 'seeker_mock',
+                onboarding_completed: true
+              }).select().single();
+              
+              if (newProfile) setProfile(newProfile);
+              else console.error("Failed to create mock profile", error);
+            }
             setLoading(false);
             return;
           }
